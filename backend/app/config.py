@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     # Database
     database_url: str
     
+    # Server
+    port: int = 8000
+    
     # Admin Authentication
     admin_username: str
     admin_password: str
