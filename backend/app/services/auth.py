@@ -13,6 +13,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/admin/login")
 
 def verify_admin_credentials(username: str, password: str) -> bool:
     """Verify admin username and password against environment variables."""
+    
     return (
         username == settings.admin_username and
         password == settings.admin_password

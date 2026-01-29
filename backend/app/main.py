@@ -35,6 +35,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# DEBUG: Request Logging Middleware
+from fastapi import Request
+import logging
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    body = await request.body()
+    try:
+        print(f"DEBUG REQUEST: {request.method} {request.url}")
+        print(f"DEBUG BODY: {body.decode()}")
+    except Exception as e:
+        print(f"DEBUG LOG ERROR: {e}")
+    
+    response = await call_next(request)
+    return response
+
 # Include routers
 app.include_router(public.router, prefix="/api", tags=["Public"])
 app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
