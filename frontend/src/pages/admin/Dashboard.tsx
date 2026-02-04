@@ -109,14 +109,14 @@ const Dashboard: React.FC = () => {
 
     setSubmittingActivity(true);
     try {
-      await adminApi.createActivity(
-        selectedWing,
-        activityForm.title,
-        activityForm.description,
-        activityForm.activity_date,
-        activityForm.faculty_coordinator || undefined,
-        reportFile || undefined
-      );
+      await adminApi.createActivity({
+        wingId: selectedWing,
+        title: activityForm.title,
+        description: activityForm.description,
+        activityDate: activityForm.activity_date,
+        facultyCoordinator: activityForm.faculty_coordinator || undefined,
+        reportFile: reportFile || undefined
+      });
       setActivityForm({ title: '', description: '', activity_date: '', faculty_coordinator: '' });
       setReportFile(null);
       setShowActivityForm(false);
