@@ -1,72 +1,167 @@
+"""
+Cloudinary service for media uploads.
+Provides functions for uploading images and PDFs to Cloudinary CDN.
+"""
+
+import logging
+from typing import Dict, List
+
 import cloudinary
 import cloudinary.uploader
-from typing import List, Dict
 from fastapi import UploadFile
+
 from app.config import get_settings
 
+# =============================================================================
+# Configuration
+# =============================================================================
+
 settings = get_settings()
+logger = logging.getLogger(__name__)
 
-# Mock Cloudinary configuration - we are not using it properly for now
-# This satisfies the "clean application" request by removing the dependency on valid credentials
-
-# Configure Cloudinary
-cloudinary.config( 
-  cloud_name = settings.cloudinary_cloud_name, 
-  api_key = settings.cloudinary_api_key, 
-  api_secret = settings.cloudinary_api_secret 
+# Configure Cloudinary client
+cloudinary.config(
+    cloud_name=settings.cloudinary_cloud_name,
+    api_key=settings.cloudinary_api_key,
+    api_secret=settings.cloudinary_api_secret,
 )
 
-async def upload_image(file: UploadFile, folder: str = "anvaya") -> Dict[str, str]:
+# =============================================================================
+# Image Operations
+# =============================================================================
+
+async def upload_image(
+    file: UploadFile,
+    folder: str = "anvaya"
+) -> Dict[str, str]:
     """
-    Upload image to Cloudinary.
+    Upload a single image to Cloudinary.
+    
+    Args:
+        file: The image file to upload.
+        folder: Destination folder in Cloudinary.
+        
+    Returns:
+        Dictionary containing 'url' and 'public_id'.
+        
+    Raises:
+        Exception: If the upload fails.
     """
-    # Reset file pointer just in case
+    # Reset file pointer
     await file.seek(0)
     
-    # Upload to Cloudinary
-    # file.file is the underlying Python file object compatible with Cloudinary
-    result = cloudinary.uploader.upload(file.file, folder=folder)
+    logger.debug(f"Uploading image to folder: {folder}")
+    
+    result = cloudinary.uploader.upload(
+        file.file,
+        folder=folder,
+        resource_type="image",
+    )
     
     return {
-        "url": result.get("secure_url"),
-        "public_id": result.get("public_id")
+        "url": result.get("secure_url", ""),
+        "public_id": result.get("public_id", ""),
     }
 
 
-async def upload_images_bulk(files: List[UploadFile], folder: str = "anvaya") -> List[Dict[str, str]]:
+async def upload_images_bulk(
+    files: List[UploadFile],
+    folder: str = "anvaya"
+) -> List[Dict[str, str]]:
     """
-    Bulk upload images to Cloudinary.
+    Upload multiple images to Cloudinary.
+    
+    Uploads are performed sequentially to avoid rate limits.
+    
+    Args:
+        files: List of image files to upload.
+        folder: Destination folder in Cloudinary.
+        
+    Returns:
+        List of dictionaries containing 'url' and 'public_id' for each image.
+        
+    Raises:
+        Exception: If any upload fails.
     """
-    results = []
+    results: List[Dict[str, str]] = []
+    
     for file in files:
-        # Use simple synchronous loop as cloudinary lib is sync (unless managing threads)
-        # For bulk, sequential is safer to avoid rate limits or sync issues
         result = await upload_image(file, folder)
         results.append(result)
+    
+    logger.info(f"Uploaded {len(results)} images to {folder}")
     return results
 
 
-async def upload_pdf(file: UploadFile, folder: str = "anvaya/reports") -> Dict[str, str]:
+# =============================================================================
+# PDF Operations
+# =============================================================================
+
+async def upload_pdf(
+    file: UploadFile,
+    folder: str = "anvaya/reports"
+) -> Dict[str, str]:
     """
-    Upload PDF to Cloudinary.
+    Upload a PDF document to Cloudinary.
+    
+    Args:
+        file: The PDF file to upload.
+        folder: Destination folder in Cloudinary.
+        
+    Returns:
+        Dictionary containing 'url' and 'public_id'.
+        
+    Raises:
+        Exception: If the upload fails.
     """
+    # Reset file pointer
     await file.seek(0)
     
-    result = cloudinary.uploader.upload(file.file, folder=folder, resource_type="auto")
+    logger.debug(f"Uploading PDF to folder: {folder}")
+    
+    result = cloudinary.uploader.upload(
+        file.file,
+        folder=folder,
+        resource_type="auto",  # Auto-detect resource type
+    )
     
     return {
-        "url": result.get("secure_url"),
-        "public_id": result.get("public_id")
+        "url": result.get("secure_url", ""),
+        "public_id": result.get("public_id", ""),
     }
 
 
-def delete_media(public_id: str, resource_type: str = "image") -> bool:
+# =============================================================================
+# Delete Operations
+# =============================================================================
+
+def delete_media(
+    public_id: str,
+    resource_type: str = "image"
+) -> bool:
     """
-    Delete media from Cloudinary.
+    Delete a media file from Cloudinary.
+    
+    Args:
+        public_id: The Cloudinary public ID of the file.
+        resource_type: Type of resource ('image', 'video', 'raw').
+        
+    Returns:
+        True if deleted successfully, False otherwise.
     """
     try:
-        cloudinary.uploader.destroy(public_id, resource_type=resource_type)
-        return True
+        result = cloudinary.uploader.destroy(
+            public_id,
+            resource_type=resource_type,
+        )
+        success = result.get("result") == "ok"
+        
+        if success:
+            logger.debug(f"Deleted media: {public_id}")
+        else:
+            logger.warning(f"Failed to delete media {public_id}: {result}")
+        
+        return success
     except Exception as e:
-        print(f"Error deleting from Cloudinary: {e}")
+        logger.error(f"Error deleting from Cloudinary ({public_id}): {e}")
         return False
