@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp, Download, Calendar, User } from 'lucide-react';
 import { Activity } from '@/types/activity';
-import Button from './ui/Button';
 
 interface ActivityCardProps {
   activity: Activity;
@@ -69,17 +68,13 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
                 <div>
                   <a
                     href={activity.report_url}
+                    download
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-lg bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 transition-all duration-200"
                   >
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      className="inline-flex items-center"
-                    >
-                      <Download size={16} className="mr-2" />
-                      View Report
-                    </Button>
+                    <Download size={16} className="mr-2" />
+                    Download Report
                   </a>
                 </div>
               )}
