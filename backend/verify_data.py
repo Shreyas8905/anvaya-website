@@ -5,13 +5,12 @@ from sqlalchemy import select
 from app.database import async_session
 from app.models.wing import Wing
 from app.models.activity import Activity
-import app.models.photo # Ensure registered
+import app.models.photo
 
 async def check():
     async with async_session() as session:
         print("Testing Wing Select...")
         try:
-            # Need to import schemas
             from app.schemas.wing import WingWithRelations
             stmt = select(Wing).where(Wing.slug == "codezero")
             result = await session.execute(stmt)
@@ -20,7 +19,6 @@ async def check():
             print(f"Found wing: {wing.name if wing else 'None'}")
             
             if wing:
-                # Manually populate relations as get_wing_with_relations does
                 activities_result = await session.execute(
                     select(Activity)
                     .where(Activity.wing_id == wing.id)

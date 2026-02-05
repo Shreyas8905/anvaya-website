@@ -6,29 +6,16 @@ import os
 
 
 class Settings(BaseSettings):
-    """Application settings loaded from environment variables."""
-    
-    # Database
     database_url: str
-    
-    # Server
     port: int = 8000
-    
-    # Admin Authentication
     admin_username: str
     admin_password: str
-    
-    # JWT
     jwt_secret: str
     jwt_algorithm: str = "HS256"
     jwt_expiration_minutes: int = 60
-    
-    # Cloudinary
     cloudinary_cloud_name: str
     cloudinary_api_key: str
     cloudinary_api_secret: str
-    
-    # CORS
     cors_origins: str = os.getenv("CORS_ORIGINS")
     
     class Config:
@@ -38,7 +25,6 @@ class Settings(BaseSettings):
 
 @lru_cache()
 def get_settings() -> Settings:
-    """Get cached settings instance."""
     return Settings()
 
 print(get_settings().cors_origins)

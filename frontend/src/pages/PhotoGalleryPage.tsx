@@ -44,7 +44,6 @@ const PhotoGalleryPage: React.FC = () => {
   return (
     <div className="bg-gray-50 min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="mb-8">
           <Link to={getWingRoute(slug!)}>
             <Button variant="outline" size="sm" className="inline-flex items-center mb-4">
@@ -56,14 +55,12 @@ const PhotoGalleryPage: React.FC = () => {
           <p className="text-gray-600 mt-2">{photos.length} photos</p>
         </div>
 
-        {/* Error State */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
             <p className="text-red-700">{error}</p>
           </div>
         )}
 
-        {/* Gallery */}
         <PhotoGallery photos={photos} />
       </div>
     </div>

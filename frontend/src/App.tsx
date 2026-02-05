@@ -12,14 +12,12 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          {/* Public Routes */}
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="wings/:slug" element={<WingPage />} />
             <Route path="wings/:slug/gallery" element={<PhotoGalleryPage />} />
           </Route>
 
-          {/* Admin Routes */}
           <Route path="/admin/login" element={<Login />} />
           <Route
             path="/admin/dashboard"

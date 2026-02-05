@@ -57,7 +57,6 @@ const ImageSlideshow: React.FC<ImageSlideshowProps> = ({
 
       {photos.length > 1 && (
         <>
-          {/* Navigation buttons */}
           <button
             onClick={goToPrevious}
             className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
@@ -71,7 +70,6 @@ const ImageSlideshow: React.FC<ImageSlideshowProps> = ({
             <ChevronRight size={24} />
           </button>
 
-          {/* Dots indicator */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
             {photos.map((_, index) => (
               <button

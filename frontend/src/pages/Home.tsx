@@ -10,9 +10,7 @@ import hodphoto from '@/assets/hodphoto.jpg';
 const Home: React.FC = () => {
   return (
     <div className="bg-white">
-      {/* Hero Section with Gradient Background */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-primary-500 to-accent-500 py-20 sm:py-32">
-        {/* Decorative background elements */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-72 h-72 bg-accent-300 rounded-full filter blur-3xl animate-float"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary-400 rounded-full filter blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
@@ -52,7 +50,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* College Section */}
       <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2
@@ -96,7 +93,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Department Section */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2
@@ -166,7 +162,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Anvaya Club Section */}
       <section className="py-16 bg-gradient-to-b from-accent-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -215,7 +210,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Wings Overview */}
       <section className="py-20 bg-gradient-to-b from-white via-accent-50/30 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -260,7 +254,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Activity Statistics Section */}
       <ActivityStatistics />
     </div>
   );

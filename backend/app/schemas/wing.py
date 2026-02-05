@@ -5,7 +5,6 @@ from app.schemas.photo import PhotoResponse
 
 
 class WingBase(BaseModel):
-    """Base wing schema."""
     name: str
     slug: str
     about: str
@@ -14,7 +13,6 @@ class WingBase(BaseModel):
 
 
 class WingResponse(WingBase):
-    """Wing response schema."""
     id: int
     
     class Config:
@@ -22,7 +20,6 @@ class WingResponse(WingBase):
 
 
 class WingWithRelations(WingResponse):
-    """Wing with activities and photos."""
     activities: List[ActivityResponse] = []
     photos: List[PhotoResponse] = []
     

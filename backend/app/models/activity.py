@@ -7,21 +7,18 @@ if TYPE_CHECKING:
 
 
 class Activity(SQLModel, table=True):
-    """Activity model for wing events and reports."""
-    
     __tablename__ = "activities"
     
     id: Optional[int] = Field(default=None, primary_key=True)
     wing_id: int = Field(foreign_key="wings.id", index=True)
     title: str = Field(max_length=200)
-    description: str  # Full activity description
-    activity_date: date  # Date when activity occurred
-    faculty_coordinator: Optional[str] = Field(default=None, max_length=200)  # Faculty coordinator name
-    report_url: Optional[str] = None  # Cloudinary PDF URL
-    report_cloudinary_id: Optional[str] = None  # Cloudinary public_id for PDF
+    description: str
+    activity_date: date
+    faculty_coordinator: Optional[str] = Field(default=None, max_length=200)
+    report_url: Optional[str] = None
+    report_cloudinary_id: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
-    # Relationship
     wing: Optional["Wing"] = Relationship(back_populates="activities")
     
     class Config:

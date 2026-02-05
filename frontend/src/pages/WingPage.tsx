@@ -56,14 +56,11 @@ const WingPage: React.FC = () => {
     );
   }
 
-  // Get latest 10 photos for slideshow
   const slideshowPhotos = wing.photos.slice(0, 10);
 
   return (
     <div className="bg-white">
-      {/* Hero with Slideshow */}
       <section className="bg-gradient-to-br from-primary-600 via-primary-500 to-accent-500 py-12 sm:py-16 text-white relative overflow-hidden">
-        {/* Decorative background elements */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-10 right-10 w-64 h-64 bg-accent-400 rounded-full filter blur-3xl opacity-50"></div>
           <div className="absolute bottom-10 left-10 w-80 h-80 bg-primary-400 rounded-full filter blur-3xl opacity-50"></div>
@@ -102,7 +99,6 @@ const WingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* About, Vision, Mission */}
       <section className="py-16 bg-gradient-to-b from-primary-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-6">
@@ -128,7 +124,6 @@ const WingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Activities Feed */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-primary-900 mb-8 border-l-4 border-accent-500 pl-4">Activities & Events</h2>

@@ -15,11 +15,9 @@ const Dashboard: React.FC = () => {
   const [selectedWing, setSelectedWing] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'photos' | 'activities'>('photos');
   
-  // Photo state
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
   
-  // Activity state
   const [activities, setActivities] = useState<Activity[]>([]);
   const [showActivityForm, setShowActivityForm] = useState(false);
   const [activityForm, setActivityForm] = useState({
@@ -145,7 +143,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -162,7 +159,6 @@ const Dashboard: React.FC = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Wing Selector */}
         <Card className="mb-6">
           <h2 className="text-lg font-semibold mb-3">Select Wing</h2>
           <select
@@ -178,7 +174,6 @@ const Dashboard: React.FC = () => {
           </select>
         </Card>
 
-        {/* Tab Selector */}
         <div className="flex space-x-4 mb-6">
           <button
             onClick={() => setActiveTab('photos')}
@@ -202,7 +197,6 @@ const Dashboard: React.FC = () => {
           </button>
         </div>
 
-        {/* Photo Management */}
         {activeTab === 'photos' && (
           <div className="space-y-6">
             <Card>
@@ -246,7 +240,6 @@ const Dashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Activity Management */}
         {activeTab === 'activities' && (
           <div className="space-y-6">
             <Card>

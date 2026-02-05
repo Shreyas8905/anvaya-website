@@ -1,19 +1,13 @@
-"""
-Database initialization script to create wing entries.
-Run this once after setting up your database.
-"""
 import asyncio
 from sqlmodel import SQLModel
 from sqlalchemy import select
 from app.database import async_session, engine, init_db
 from app.models.wing import Wing
-# Import all models to ensure registration
 import app.models.activity
 import app.models.photo
 
 
 async def reset_db():
-    """Reset database by dropping and recreating all tables."""
     async with engine.begin() as conn:
         print("Dropping existing tables...")
         await conn.run_sync(SQLModel.metadata.drop_all)
@@ -22,8 +16,6 @@ async def reset_db():
 
 
 async def seed_wings():
-    """Create initial wing entries in the database."""
-    
     wings_data = [
         {
             "name": "CodeZero",
@@ -63,7 +55,6 @@ async def seed_wings():
     ]
     
     async with async_session() as session:
-        # Check if wings already exist to avoid duplicates if reset failed or partial run
         result = await session.execute(select(Wing))
         if result.scalars().first():
             print("Wings already exist, skipping seed.")
@@ -79,14 +70,11 @@ async def seed_wings():
 
 
 async def main():
-    """Main function to initialize database and seed data."""
     print("Initializing database...")
-    # Force reset to ensure schema updates (like faculty_coordinator) are applied
     await reset_db()
     print("✓ Database tables recreated!")
     
     print("\nSeeding wings data...")
-    # Need to import select for the check inside seed_wings
     from sqlalchemy import select
     await seed_wings()
     

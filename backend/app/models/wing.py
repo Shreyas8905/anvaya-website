@@ -7,18 +7,15 @@ if TYPE_CHECKING:
 
 
 class Wing(SQLModel, table=True):
-    """Wing model representing each club wing (CodeZero, Kalavaibhava, etc.)."""
-    
     __tablename__ = "wings"
     
     id: Optional[int] = Field(default=None, primary_key=True)
-    name: str = Field(index=True, max_length=100)  # e.g., "CodeZero"
-    slug: str = Field(unique=True, index=True, max_length=100)  # e.g., "codezero"
-    about: str  # About section
-    vision: str  # Vision statement
-    mission: str  # Mission statement
+    name: str = Field(index=True, max_length=100)
+    slug: str = Field(unique=True, index=True, max_length=100)
+    about: str
+    vision: str
+    mission: str
     
-    # Relationships
     activities: List["Activity"] = Relationship(back_populates="wing")
     photos: List["Photo"] = Relationship(back_populates="wing")
     

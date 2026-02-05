@@ -18,7 +18,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is already logged in
     const token = localStorage.getItem('authToken');
     const username = localStorage.getItem('username');
     if (token && username) {
@@ -63,7 +62,6 @@ export const useAuth = () => {
   return context;
 };
 
-// Protected Route Component
 export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();

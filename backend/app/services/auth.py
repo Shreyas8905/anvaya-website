@@ -7,13 +7,10 @@ from app.config import get_settings
 
 settings = get_settings()
 
-# OAuth2 scheme for token extraction
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/admin/login")
 
 
 def verify_admin_credentials(username: str, password: str) -> bool:
-    """Verify admin username and password against environment variables."""
-    
     return (
         username == settings.admin_username and
         password == settings.admin_password
@@ -21,7 +18,6 @@ def verify_admin_credentials(username: str, password: str) -> bool:
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
-    """Create JWT access token."""
     to_encode = data.copy()
     
     if expires_delta:
@@ -39,7 +35,6 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
 
 
 def verify_token(token: str) -> dict:
-    """Verify and decode JWT token."""
     try:
         payload = jwt.decode(
             token,
@@ -56,7 +51,6 @@ def verify_token(token: str) -> dict:
 
 
 async def get_current_admin(token: str = Depends(oauth2_scheme)) -> dict:
-    """Dependency to get current authenticated admin."""
     payload = verify_token(token)
     username: str = payload.get("sub")
     

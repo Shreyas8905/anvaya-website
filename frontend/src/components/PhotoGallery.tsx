@@ -41,7 +41,6 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         ))}
       </div>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {selectedPhoto && (
           <div

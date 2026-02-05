@@ -7,17 +7,14 @@ if TYPE_CHECKING:
 
 
 class Photo(SQLModel, table=True):
-    """Photo model for wing image gallery."""
-    
     __tablename__ = "photos"
     
     id: Optional[int] = Field(default=None, primary_key=True)
     wing_id: int = Field(foreign_key="wings.id", index=True)
-    url: str  # Cloudinary secure URL
-    cloudinary_id: str  # Cloudinary public_id for deletion
+    url: str
+    cloudinary_id: str
     uploaded_at: datetime = Field(default_factory=datetime.utcnow)
     
-    # Relationship
     wing: Optional["Wing"] = Relationship(back_populates="photos")
     
     class Config:

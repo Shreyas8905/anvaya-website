@@ -24,7 +24,6 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
       layout
       className="border border-gray-200 rounded-lg overflow-hidden bg-white hover:shadow-md transition-shadow"
     >
-      {/* Header - Always visible */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
@@ -41,7 +40,6 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
         </div>
       </button>
 
-      {/* Expanded content */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div

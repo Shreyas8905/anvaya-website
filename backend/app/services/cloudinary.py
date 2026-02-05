@@ -1,8 +1,3 @@
-"""
-Cloudinary service for media uploads.
-Provides functions for uploading images and PDFs to Cloudinary CDN.
-"""
-
 import logging
 from typing import Dict, List
 
@@ -12,42 +7,20 @@ from fastapi import UploadFile
 
 from app.config import get_settings
 
-# =============================================================================
-# Configuration
-# =============================================================================
-
 settings = get_settings()
 logger = logging.getLogger(__name__)
 
-# Configure Cloudinary client
 cloudinary.config(
     cloud_name=settings.cloudinary_cloud_name,
     api_key=settings.cloudinary_api_key,
     api_secret=settings.cloudinary_api_secret,
 )
 
-# =============================================================================
-# Image Operations
-# =============================================================================
 
 async def upload_image(
     file: UploadFile,
     folder: str = "anvaya"
 ) -> Dict[str, str]:
-    """
-    Upload a single image to Cloudinary.
-    
-    Args:
-        file: The image file to upload.
-        folder: Destination folder in Cloudinary.
-        
-    Returns:
-        Dictionary containing 'url' and 'public_id'.
-        
-    Raises:
-        Exception: If the upload fails.
-    """
-    # Reset file pointer
     await file.seek(0)
     
     logger.debug(f"Uploading image to folder: {folder}")
@@ -68,21 +41,6 @@ async def upload_images_bulk(
     files: List[UploadFile],
     folder: str = "anvaya"
 ) -> List[Dict[str, str]]:
-    """
-    Upload multiple images to Cloudinary.
-    
-    Uploads are performed sequentially to avoid rate limits.
-    
-    Args:
-        files: List of image files to upload.
-        folder: Destination folder in Cloudinary.
-        
-    Returns:
-        List of dictionaries containing 'url' and 'public_id' for each image.
-        
-    Raises:
-        Exception: If any upload fails.
-    """
     results: List[Dict[str, str]] = []
     
     for file in files:
@@ -93,28 +51,10 @@ async def upload_images_bulk(
     return results
 
 
-# =============================================================================
-# PDF Operations
-# =============================================================================
-
 async def upload_pdf(
     file: UploadFile,
     folder: str = "anvaya/reports"
 ) -> Dict[str, str]:
-    """
-    Upload a PDF document to Cloudinary.
-    
-    Args:
-        file: The PDF file to upload.
-        folder: Destination folder in Cloudinary.
-        
-    Returns:
-        Dictionary containing 'url' and 'public_id'.
-        
-    Raises:
-        Exception: If the upload fails.
-    """
-    # Reset file pointer
     await file.seek(0)
     
     logger.debug(f"Uploading PDF to folder: {folder}")
@@ -122,7 +62,7 @@ async def upload_pdf(
     result = cloudinary.uploader.upload(
         file.file,
         folder=folder,
-        resource_type="auto",  # Auto-detect resource type
+        resource_type="auto",
     )
     
     return {
@@ -131,24 +71,10 @@ async def upload_pdf(
     }
 
 
-# =============================================================================
-# Delete Operations
-# =============================================================================
-
 def delete_media(
     public_id: str,
     resource_type: str = "image"
 ) -> bool:
-    """
-    Delete a media file from Cloudinary.
-    
-    Args:
-        public_id: The Cloudinary public ID of the file.
-        resource_type: Type of resource ('image', 'video', 'raw').
-        
-    Returns:
-        True if deleted successfully, False otherwise.
-    """
     try:
         result = cloudinary.uploader.destroy(
             public_id,

@@ -1,4 +1,3 @@
-// Wing configurations
 export const WINGS = [
   {
     name: 'CodeZero',
@@ -27,7 +26,6 @@ export const WINGS = [
   },
 ];
 
-// Routes
 export const ROUTES = {
   HOME: '/',
   WING: '/wings/:slug',
@@ -36,6 +34,5 @@ export const ROUTES = {
   ADMIN_DASHBOARD: '/admin/dashboard',
 };
 
-// Helper to generate wing route
 export const getWingRoute = (slug: string) => `/wings/${slug}`;
 export const getWingGalleryRoute = (slug: string) => `/wings/${slug}/gallery`;

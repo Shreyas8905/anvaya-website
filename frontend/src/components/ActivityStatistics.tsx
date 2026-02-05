@@ -5,14 +5,13 @@ import { TrendingUp, Loader2 } from 'lucide-react';
 import Card from './ui/Card';
 import { publicApi, ActivityStatisticsResponse } from '@/services/publicApi';
 
-// Color palette for the pie chart
 const COLORS = [
-  '#3b82f6', // primary-500
-  '#f59e0b', // accent-500
-  '#10b981', // green-500
-  '#8b5cf6', // purple-500
-  '#ec4899', // pink-500
-  '#06b6d4', // cyan-500
+  '#3b82f6',
+  '#f59e0b',
+  '#10b981',
+  '#8b5cf6',
+  '#ec4899',
+  '#06b6d4',
 ];
 
 const ActivityStatistics: React.FC = () => {
@@ -55,7 +54,6 @@ const ActivityStatistics: React.FC = () => {
     );
   }
 
-  // Prepare data for the pie chart
   const chartData = statistics.statistics.map((stat, index) => ({
     name: stat.wing_name,
     value: stat.activity_count,
@@ -81,7 +79,6 @@ const ActivityStatistics: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Year Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -132,7 +129,6 @@ const ActivityStatistics: React.FC = () => {
           </motion.div>
         ) : (
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Pie Chart */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -167,7 +163,6 @@ const ActivityStatistics: React.FC = () => {
               </Card>
             </motion.div>
 
-            {/* Statistics List */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -202,7 +197,6 @@ const ActivityStatistics: React.FC = () => {
                     </div>
                   ))}
                   
-                  {/* Total */}
                   <div className="pt-4 border-t-2 border-primary-200">
                     <div className="flex items-center justify-between p-3 bg-gradient-to-r from-accent-100 to-primary-100 rounded-lg">
                       <span className="font-bold text-lg text-gray-800">Total</span>

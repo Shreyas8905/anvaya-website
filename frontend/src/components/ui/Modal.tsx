@@ -10,7 +10,6 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
-  // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -26,7 +25,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -35,7 +33,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
             onClick={onClose}
           />
           
-          {/* Modal */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -43,7 +40,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto relative"
             >
-              {/* Close button */}
               <button
                 onClick={onClose}
                 className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
@@ -51,7 +47,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
                 <X size={24} />
               </button>
               
-              {/* Content */}
               <div className="p-6">
                 {title && <h3 className="text-2xl font-semibold mb-4">{title}</h3>}
                 {children}
